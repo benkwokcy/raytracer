@@ -1,0 +1,8 @@
+.DS_Store
+CMakeCache.txt
+CMakeFiles/
+Makefile
+_deps/
+cmake_install.cmake
+.vscode
+renders
