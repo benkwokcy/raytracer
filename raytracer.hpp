@@ -671,9 +671,9 @@ public:
 
         // jitter the direction to create soft shadows
         math::Vector jitterDirection { -direction };
-        jitterDirection.x += (rand_float() / 20.0);
-        jitterDirection.y += (rand_float() / 20.0);
-        jitterDirection.z += (rand_float() / 20.0);
+        jitterDirection.x += (rand_float() / 30.0);
+        jitterDirection.y += (rand_float() / 30.0);
+        jitterDirection.z += (rand_float() / 30.0);
 
         return jitterDirection;
     }
