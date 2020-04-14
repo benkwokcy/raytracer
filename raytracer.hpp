@@ -48,6 +48,25 @@ void buildScene(World& w);
 void render(int width, int height, std::vector<Colour>* image);
 void renderParallel(int width, int height, std::vector<Colour>* image);
 
+/********************
+ *      UTILITY     *
+ ********************/
+float rand_float(void) {
+    return (float) rand() / (float) RAND_MAX;
+}
+
+float rand_float_multi(int l, float h) {
+    return (rand_float() * (h - l) + l);
+}
+
+int rand_int_multi(int l, int h) {
+    return ((int) (rand_float_multi(0, h - l + 1) + l));
+}
+
+/********************
+ *      SLAB        *
+ ********************/
+// represents a subsection of the image grid to be rendered by a thread worker
 struct Slab {
     int startY;
     int startX;
@@ -194,18 +213,6 @@ public:
                     samples[j * dim + i + numSamples * p].y = samples[k * dim + i + numSamples * p].y;
                     samples[k * dim + i + numSamples * p].y = t;
                 }
-    }
-
-    float rand_float_multi(int l, float h) {
-        return (rand_float() * (h - l) + l);
-    }
-
-    int rand_int_multi(int l, int h) {
-        return ((int) (rand_float_multi(0, h - l + 1) + l));
-    }
-
-    float rand_float(void) {
-        return (float) rand() / (float) RAND_MAX;
     }
 
     void setupShuffledIndices(void) {
@@ -661,7 +668,14 @@ public:
 
     math::Vector getDirection(math::Vector p) {
         (void) p; // avoid unused parameter warning
-        return -direction;
+
+        // jitter the direction to create soft shadows
+        math::Vector jitterDirection { -direction };
+        jitterDirection.x += (rand_float() / 20.0);
+        jitterDirection.y += (rand_float() / 20.0);
+        jitterDirection.z += (rand_float() / 20.0);
+
+        return jitterDirection;
     }
 
     float getDistance(math::Vector p) {
