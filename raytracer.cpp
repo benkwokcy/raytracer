@@ -1,4 +1,5 @@
 #include "raytracer.hpp"
+#include <atlas/core/Timer.hpp>     // Timer header
 
 // colours
 #define NICEGREY Colour { 0.867, 0.867, 0.875 }
@@ -136,8 +137,8 @@ void buildScene(World& w) {
 
     // define my lights
     std::shared_ptr<Sampler> s4(new Sampler( w.numSamples, 1 ));
-    std::shared_ptr<AmbientOccluder> ambient(new AmbientOccluder( WHITE, 1.35, s4, 0.0 ));
-    std::shared_ptr<DirectionalLight> directional(new DirectionalLight( WHITE , 5, {150, 50, -50} ));
+    std::shared_ptr<AmbientOccluder> ambient(new AmbientOccluder( WHITE, 1.65, s4, 0.0 ));
+    std::shared_ptr<DirectionalLight> directional(new DirectionalLight( WHITE , 8.5, {150, 50, -50} ));
     w.ambient = ambient;
     w.lights.push_back(directional);
 }
